@@ -1,9 +1,5 @@
 // Исправьте функцию sendRequest
-function sendRequest (json) {
-    let data "data" (telnumber:"+7(987)65-43-210"; address:"ул. Ленина, дом 2, 4 подъезд, 5 этаж, кв 53"; title: "пицца"; summ: "900")
-
-
-}// Аргументы функции:
+// Аргументы функции:
 // - имя клиента
 // - телефон клиента
 // - объект с адресом доставки: {street, house, entrance, floor, flat}
@@ -38,34 +34,15 @@ function sendRequest (json) {
 // }
 
 function sendRequest(name, phone, address, goods, sum) {
-    let data = {goods: ["пицца"], order: {}};
-    {
-        "data": {
-            "client": "Иван +7(987)65-43-210",
-                "order": {
-            "address": "ул. Ленина, дом 2, 4 подъезд, 5 этаж, кв 53",
-        "sum": 900
-        },
-        "goods": [
-        {
-        "title": "Пицца",
-        "count": 2
-        }
-        ]
-        }
-    }
-    let countOfGoods = goods.length;
+    let data = {};
+    data.client = `${name} ${phone}`;
+    let addressString = `ул. ${address.street}, дом ${address.house}, ${address.entrance} подъезд, ${address.floor} этаж, кв ${address.flat}`
+    data.order = {address: addressString, sum}
+    data.goods = [];
 
-    for (let i = 0; i <= countOfGoods; i += 1) {
-        data.goods.push(goods[i].title);
-    }
+    goods.forEach((good)=> {
+        data.goods.push({ title: good.title, count: good.count })
+    })
 
-    data.order.address = address;
-    data.order.sum = name + phone + address + goods + sum;
-
-    data.client = 'Иван';
-
-    let jsonData = JSON.stringify(data);
-
-    return jsonData;
+    return JSON.stringify({data})
 }
